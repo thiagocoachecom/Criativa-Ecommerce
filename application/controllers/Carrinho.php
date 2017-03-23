@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Carrinho extends CI_Controller {
 
     private $categorias;
+    private $paginas;
 
     public function __construct() {
         parent::__construct();
@@ -17,11 +18,9 @@ class Carrinho extends CI_Controller {
     public function _init() {
         //Carregar classes
         $this->load->model('categorias_model', 'modelcategorias');
+        $this->load->model('paginas_model', 'modelpaginas');
         $this->categorias = $this->modelcategorias->listar_categorias();
-
-        //Carregar categorias
-        $this->categorias = $this->modelcategorias->listar_categorias();
-        $data['categorias'] = $this->categorias;
+        $this->paginas = $this->modelpaginas->listar_paginas();
 
         //Configurações de Templates
         $this->output->set_template('loja_frontend');
@@ -38,6 +37,7 @@ class Carrinho extends CI_Controller {
 
     public function index() {
         $data['categorias'] = $this->categorias;
+        $data['paginas'] = $this->paginas;
 
         if (null != $this->session->userdata('logado') && count($this->cart->contents()) > 0) {
             $sessao = $this->session->userdata();
@@ -219,6 +219,7 @@ class Carrinho extends CI_Controller {
     public function form_pagamento() {
         if (null != $this->session->userdata('logado')) {
             $dados['categorias'] = $this->categorias;
+            $dados['paginas'] = $this->paginas;
             if (null != $this->session->userdata('logado')) {
                 $sessao = $this->session->userdata();
                 $cep = str_replace("-", "", $sessao['cliente']->cep);
@@ -325,15 +326,13 @@ class Carrinho extends CI_Controller {
                     $this->db->trans_rollback();
                 }
                 $dados_retorno['transacao'] = $transaction;
+                $dados_retorno['categorias'] = $this->categorias;
+                $dados_retorno['paginas'] = $this->paginas;
+
                 $this->load->view('loja_frontend/retorno_cartao', $dados_retorno);
 
                 $this->db->trans_complete();
             } else if ($this->input->post('tipo_pagamento') == 'boleto') {
-                
-                
-                
-                
-                
                 
             } else {
                 redirect(base_url('pagar-e-finalizar-compra'));

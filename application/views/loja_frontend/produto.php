@@ -1,6 +1,3 @@
-<pre>
-    <?= print_r($produtos); ?>
-</pre>
 <form action="<?= base_url('carrinho/adicionar') ?>" method="POST" accept-charset="utf-8">
     <div class="mold_produto_container">
         <div class="col-md-12">
@@ -8,10 +5,10 @@
                 <div class="col-md-6">
                     <div class='span4'>
                         <?php
-                        if (is_file("assets/img/produtos/" . md5($produtos[0]->id) . ".jpg")) {
-                            $foto = base_url("assets/img/produtos/" . md5($produtos[0]->id) . ".jpg");
+                        if (is_file("assets/uploads/images/produtos/" . md5($produtos[0]->id) . ".jpg")) {
+                            $foto = base_url("assets/uploads/images/produtos/" . md5($produtos[0]->id) . ".jpg");
                         } else {
-                            $foto = 'http://kitchenaidwp.s3.amazonaws.com/wp-content/uploads/2013/09/img-produto-657x605.png';
+                            $foto = base_url("assets/themes/loja_backend/images/categoria-sem-imagem.gif");
                         }
                         echo img($foto, FALSE, array('class' => 'img-responsive'));
                         ?>
@@ -82,45 +79,65 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="mold-form-pagamento">
 
-                                <h4>Formas de Pagamento:</h4>
-                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingOne">
-                                            <h4 class="panel-title">
-                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    Boleto Bancário
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-md-2">
-                                                        <img style="-webkit-user-select: none" src="https://www.asaas.com/blog/wp-content/uploads/2015/08/banner_boleto2.jpg" class="img-responsive">
-                                                    </div>
-                                                    <div class="col-md-10">
-                                                        Com o boleto bancário da <b>BSB Placas</b> você tem total facilidade no processo de compra em nosso site. Realize o pagamento com até <b>12% de desconto</b> em todo site.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs ul-produtos" role="tablist">
+                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Especificações Técnicas:</a></li>
+                            <li role="presentation"><a href="#forma-pagamento" aria-controls="forma-pagamento" role="tab" data-toggle="tab">Formas de Pagamento:</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                <?= $produtos[0]->descricao ?>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="forma-pagamento">
+                                <div class="mold-form-pagamento">
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        Boleto Bancário
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <img style="-webkit-user-select: none" src="https://www.asaas.com/blog/wp-content/uploads/2015/08/banner_boleto2.jpg" class="img-responsive">
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            Com o boleto bancário da <b>BSB Placas</b> você tem total facilidade no processo de compra em nosso site. Realize o pagamento com até <b>12% de desconto</b> em todo site.
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingTwo">
-                                            <h4 class="panel-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                    Cartão de Crédito
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                            <div class="panel-body">
-                                                <img src="https://cdn.awsli.com.br/production/static/img/formas-de-pagamento/pagarme-cards.png?v=ec88fd0" alt="Pagar.me">
-                                                <br>
-                                                <br>
-                                                Em até 5x de <b>R$ 20,33</b> sem juros
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingTwo">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        Cartão de Crédito
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                <div class="panel-body">
+                                                    <img src="https://cdn.awsli.com.br/production/static/img/formas-de-pagamento/pagarme-cards.png?v=ec88fd0" alt="Pagar.me">
+                                                    <br>
+                                                    <br>
+                                                    Em até 5x de <b>R$ 20,33</b> sem juros
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -128,19 +145,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="mold_descricao_produto">
-                        <div class="panel panel-info"> <div class="panel-heading">
-                                <h3 class="panel-title">Descrição e informações do produto</h3>
-                            </div> <div class="panel-body">
-                                <?= $produtos[0]->descricao ?>
-                            </div>
-                        </div>
-                    </div>
-                    <?= reaisCart($produtos[0]->preco); ?>
+
+
+
+
+
+
                     <div class="form-group">
                         <input type="hidden" name="id" value="<?= $produtos[0]->codigo ?>">
                         <input type="hidden" name="url" value="<?= base_url(uri_string()) ?>">

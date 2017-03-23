@@ -11,7 +11,7 @@
                 $this->table->set_heading("Excluir","Alterar","Nome do cliente","Status","Pedidos");
                 foreach($clientes as $cliente){
                     $excluir = anchor(base_url("administracao/clientes/excluir/".md5($cliente->id)),"Excluir");
-                    $alterar = anchor(base_url("administracao/clientes/alterar/".md5($cliente->id)),"Aleterar");
+                    $alterar = anchor(base_url("administracao/clientes/alterar/".md5($cliente->id)),"Alterar");
                     $detalhes = anchor(base_url("administracao/clientes/detalhes/".md5($cliente->id)),($cliente->nome . "&nbsp;" . $cliente->sobrenome));
                     $status = $txt_status[$cliente->status];
                     $pedidos = $cliente->numero_pedidos;

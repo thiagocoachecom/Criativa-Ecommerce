@@ -1,7 +1,3 @@
-<pre>
-    <?=  print_r($this->cart->total());?>
-</pre>
-
 <form id="payment_form" action="<?= base_url('carrinho/finalizar_compra') ?>" method="POST">
     <div class="col-md-12">
         <div class="page-header">

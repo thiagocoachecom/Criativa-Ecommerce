@@ -1,72 +1,96 @@
-<div class="col-lg-4">
-    <h3>Adicionar novo produto</h3>
-    <?php
-    echo validation_errors();
-    echo form_open('administracao/produtos/adicionar', array('class' => 'cadastros')) .
-    form_label("Código", "txt_codigo") .
-    form_input(array('name' => 'txt_codigo', 'id' => 'txt_codigo', 'value' => set_value('txt_codigo'))) .
-    form_label("Título", "txt_titulo") .
-    form_input(array('name' => 'txt_titulo', 'id' => 'txt_titulo', 'value' => set_value('txt_titulo'))) .
-    form_label("Preço", "txt_preco") .
-    form_input(array('name' => 'txt_preco', 'id' => 'txt_preco', 'value' => set_value('txt_preco'))) .
-    form_label("Largura da caixa (mm)", "txt_largura_caixa_mm") .
-    form_input(array('name' => 'txt_largura_caixa_mm', 'id' => 'txt_largura_caixa_mm', 'value' => set_value('txt_largura_caixa_mm'))) .
-    form_label("Altura da caixa (mm)", "txt_altura_caixa_mm") .
-    form_input(array('name' => 'txt_altura_caixa_mm', 'id' => 'txt_altura_caixa_mm', 'value' => set_value('txt_altura_caixa_mm'))) .
-    form_label("Comprimento da caixa (mm)", "txt_comprimento_caixa_mm") .
-    form_input(array('name' => 'txt_comprimento_caixa_mm', 'id' => 'txt_comprimento_caixa_mm', 'value' => set_value('txt_comprimento_caixa_mm'))) .
-    form_label("Peso da caixa (gramas)", "txt_peso_gramas") .
-    form_input(array('name' => 'txt_peso_gramas', 'id' => 'txt_peso_gramas', 'value' => set_value('txt_peso_gramas'))) .
-    form_label("Descrição", "txt_descricao") .
-    form_textarea(array('name' => 'txt_descricao', 'id' => 'txt_descricao', 'value' => set_value('txt_descricao'))) .
-    form_submit("btn_adicionar", "Adicionar novo produto") .
-    form_close();
-    ?>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Produtos cadastrados</h3>
+    </div>
+
+    <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <a type="button" href="<?= base_url('administracao/produtos/criar') ?>" class="btn btn-success pull-right">Novo produto</a>
+        </div>
+    </div>
 </div>
-<div class="col-lg-8">
-    <h3>Alterar produtos existentes</h3>
-    <?php
-    $this->table->set_heading("Imagem", "Excluir", "Alterar", "Categoria", "Código", "Titulo", "Preço", "Status");
-    foreach ($produtos as $produto) {
-        
-        $image_properties = array(
-            'src' => 'assets/themes/loja_backend/images/categoria-sem-imagem.gif',
-            'alt' => 'Categoria NetCriativa sem Imagem',
-            'class' => 'cat_images',
-            'width' => '100px',
-            'height' => '100px',
-            'title' => 'That was quite a night',
-            'rel' => 'lightbox'
-        );
-        $imagem = img($image_properties);
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><i class="fa fa-bars"></i> Produtos <small>Abaixo faça as alterações necessárias nos produtos</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Imagem</th>
+                            <th>Titulo</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>      
+                        <?php
+                        foreach ($produtos as $produto) :
+                            $image_properties = array(
+                                'src' => 'assets/themes/loja_backend/images/categoria-sem-imagem.gif',
+                                'alt' => 'Categoria NetCriativa sem Imagem',
+                                'class' => 'cat_images',
+                                'width' => '100px',
+                                'height' => '100px',
+                                'title' => 'That was quite a night',
+                                'rel' => 'lightbox'
+                            );
+                            $imagem = img($image_properties);
 
 
 
-        if (is_file("assets/uploads/images/produtos/" . md5($produto->id) . ".jpg")) {
-            $image_properties = array(
-                'src' => "assets/uploads/images/produtos/" . md5($produto->id) . ".jpg",
-                'alt' => 'Categoria NetCriativa sem Imagem',
-                'class' => 'cat_images',
-                'width' => '100px',
-                'height' => '',
-                'title' => 'That was quite a night',
-                'rel' => 'lightbox'
-            );
-            $imagem = img($image_properties);
-        }
-        
-        
-        $excluir = anchor(base_url("administracao/produtos/excluir/" . md5($produto->id)), "Excluir", array('onclick' => "return confirm('Confirma exclusão?')"));
-        $alterar = anchor(base_url("administracao/produtos/alterar/" . md5($produto->id)), "Aleterar");
-        $codigo = $produto->codigo;
-        $categoria = $produto->categoria;
-        $titulo = $produto->titulo;
-        $preco = reais($produto->preco);
-        $status = ($produto->ativo == 1) ? "Ativo" : "Inativo";
-        $this->table->add_row($imagem, $excluir, $alterar, $categoria, $codigo, $titulo, $preco, $status);
-    }
-    $this->table->set_template(array('table_open' => '<table class="table table-striped miniaturas">'));
-    echo $this->table->generate();
-    echo "<div class='paginate_button'>" . $links_paginacao . "</div>";
-    ?>
+                            if (is_file("assets/uploads/images/produtos/" . md5($produto->id) . ".jpg")) {
+                                $image_properties = array(
+                                    'src' => "assets/uploads/images/produtos/" . md5($produto->id) . ".jpg",
+                                    'alt' => 'Categoria NetCriativa sem Imagem',
+                                    'class' => 'cat_images',
+                                    'width' => '100px',
+                                    'height' => '',
+                                    'title' => 'That was quite a night',
+                                    'rel' => 'lightbox'
+                                );
+                                $imagem = img($image_properties);
+                            }
+                            $status = ($produto->ativo == 1) ? "Ativo" : "Inativo";
+                            ?>
+                            <tr>
+                                <th scope="row"><?= $produto->codigo ?></th>
+                                <td><?= $imagem ?></td>
+                                <td><?= $produto->titulo ?></td>
+                                <td><?= $produto->categoria ?></td>
+                                <td><?= $produto->preco ?></td>
+                                <td><?= $status ?></td>
+                                <td>
+                                    <a href="<?= base_url('administracao/produtos/editar/' . md5($produto->id)) ?>" type="button" class="btn btn-primary">Editar</a>
+                                    <a href="<?= base_url('administracao/produtos/excluir/' . md5($produto->id)) ?>" type="button" class="btn btn-danger">Excluir</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paginate_button"><?= $links_paginacao ?></div>
+        </div>
+    </div>
 </div>

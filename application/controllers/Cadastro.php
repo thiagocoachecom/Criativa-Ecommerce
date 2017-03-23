@@ -6,6 +6,7 @@ if (!defined('BASEPATH'))
 class Cadastro extends CI_Controller {
 
     private $categorias;
+    private $paginas;
 
     function __construct() {
         parent::__construct();
@@ -15,10 +16,11 @@ class Cadastro extends CI_Controller {
     private function _init() {
         //Carregar models, library, helper
         $this->load->model('categorias_model', 'modelcategorias');
-        $this->load->library('form_validation');
+        $this->load->model('paginas_model', 'modelpaginas');
 
-        //Carregar categorias
+        //Carregar categorias, paginas
         $this->categorias = $this->modelcategorias->listar_categorias();
+        $this->paginas = $this->modelpaginas->listar_paginas();
 
         //Configurações de Templates
         $this->output->set_template('loja_frontend');
@@ -39,6 +41,7 @@ class Cadastro extends CI_Controller {
 
     public function index() {
         $dados['categorias'] = $this->categorias;
+        $dados['paginas'] = $this->paginas;
         $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email|is_unique[clientes.email]');
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('loja_frontend/novo_cadastroLogin', $dados);
@@ -102,6 +105,7 @@ class Cadastro extends CI_Controller {
         $this->email->message($mensagem);
         if ($this->email->send()) {
             $dados['categorias'] = $this->categorias;
+            $dados['paginas'] = $this->paginas;
             $this->load->view('loja_frontend/cadastro_enviado', $dados);
         } else {
             print_r($this->email->print_debugger());
@@ -113,6 +117,7 @@ class Cadastro extends CI_Controller {
         $this->db->where('md5(email)', $hashEmail);
         if ($this->db->update('clientes', $dados)) {
             $dados['categorias'] = $this->categorias;
+            $dados['paginas'] = $this->paginas;
             $this->load->view('loja_frontend/cadastro_liberado', $dados);
         } else {
             echo "Houve um erro ao confirmar seu cadastro";
@@ -120,7 +125,6 @@ class Cadastro extends CI_Controller {
     }
 
     public function login() {
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
         $this->form_validation->set_rules('senha', 'Senha', 'required|min_length[5]');
         if ($this->form_validation->run() == FALSE) {
@@ -155,12 +159,12 @@ class Cadastro extends CI_Controller {
     }
 
     public function esqueci_minha_senha() {
-        $data['categorias'] = $this->categorias;
-        $this->load->view('loja_frontend/form_recupera_login', $data);
+        $dados['categorias'] = $this->categorias;
+        $dados['paginas'] = $this->paginas;
+        $this->load->view('loja_frontend/form_recupera_login', $dados);
     }
 
     public function recuperar_login() {
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
         $this->form_validation->set_rules('cpf', 'Senha', 'required|min_length[5]');
         if ($this->form_validation->run() == FALSE) {
@@ -179,8 +183,9 @@ class Cadastro extends CI_Controller {
                 $this->email->subject('The Grocery Store Brazil - Recuperação de cadastro');
                 $this->email->message($mensagem);
                 if ($this->email->send()) {
-                    $data['categorias'] = $this->categorias;
-                    $this->load->view('loja_frontend/senha_enviada', $data);
+                    $dados['categorias'] = $this->categorias;
+                    $dados['paginas'] = $this->paginas;
+                    $this->load->view('loja_frontend/senha_enviada', $dados);
                 } else {
                     print_r($this->email->print_debugger());
                 }
@@ -197,8 +202,9 @@ class Cadastro extends CI_Controller {
             $this->db->where('status', 1);
             $data['cliente'] = $this->db->get('clientes')->result();
             if (count($data['cliente']) == 1) {
-                $data['categorias'] = $this->categorias;
-                $this->load->view('loja_frontend/minha_conta', $data);
+                $dados['categorias'] = $this->categorias;
+                $dados['paginas'] = $this->paginas;
+                $this->load->view('loja_frontend/minha_conta', $dados);
             } else {
                 redirect(base_url("login"));
             }
@@ -209,7 +215,6 @@ class Cadastro extends CI_Controller {
 
     function salvar_alteracao_cadastro() {
         if (null != $this->session->userdata('logado')) {
-            $this->load->library('form_validation');
             $this->form_validation->set_rules('nome', 'Nome', 'required|min_length[5]');
             $this->form_validation->set_rules('cpf', 'CPF', 'required|min_length[14]');
             $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');

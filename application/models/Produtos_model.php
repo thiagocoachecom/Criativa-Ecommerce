@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 /* * *****************************************************************************
  * Model dos produtos.
@@ -75,6 +76,14 @@ class Produtos_model extends CI_Model {
     public function excluir($id) {
         $this->db->where('md5(id)', $id);
         return $this->db->delete('produtos');
+    }
+
+    public function salvar_especificacoes($dados) {
+        return $this->db->insert('especificacoes', $dados);
+    }
+
+    public function getEspecificacoes() {
+        return $this->db->get('especificacoes')->result();
     }
 
 }

@@ -15,6 +15,11 @@ class Categorias extends CI_Controller {
     }
 
     private function _init() {
+         //Controle de Permissão
+        $this->load->model('usuarios_model', 'modelusuarios');
+        $this->modelusuarios->validar($this->router->class, $this->router->method);
+        
+        
         //Carregar models
         $this->load->model('categorias_model', 'modelcategorias');
         $this->categorias = $this->modelcategorias->listar_categorias();
@@ -37,7 +42,6 @@ class Categorias extends CI_Controller {
     }
 
     public function adicionar() {
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('txt_titulo', 'Nome da categoria', 'required|min_length[3]|is_unique[categorias.titulo]');
         $this->form_validation->set_rules('txt_descricao', 'Descricao', 'required|min_length[30]');
         if ($this->form_validation->run() == FALSE) {
@@ -59,7 +63,6 @@ class Categorias extends CI_Controller {
     }
 
     public function salvar_alteracoes() {
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('txt_titulo', 'Nome da categoria', 'required|min_length[3]');
         $this->form_validation->set_rules('txt_descricao', 'Descricao', 'required|min_length[30]');
         if ($this->form_validation->run() == FALSE) {

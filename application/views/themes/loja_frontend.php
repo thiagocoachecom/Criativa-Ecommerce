@@ -97,7 +97,7 @@
                                         <span class="icon-bar"></span>
                                         <span class="icon-bar"></span>
                                     </button>
-                                    <a class="navbar-brand" href="<?= base_url('home/inicio'); ?>">
+                                    <a class="navbar-brand" href="<?= base_url(); ?>">
                                         <img src="<?= base_url('assets/themes/loja_frontend/images/logo-bsbplacas.png') ?>" alt="Sia Parafusos e Ferramentas" width="100%" title="Sia Parafusos e Ferramentas LTDA">
                                     </a>
                                 </div>
@@ -156,13 +156,9 @@
                                                     <?php endforeach; ?>
                                                 </ul>
                                             </li>
-                                            <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Quem somos</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Catálogo</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Matéria prima</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Informações Úteis</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Links Downloads</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Fotos e Vídeos</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Fale Conosco</a></li>
+                                            <?php foreach ($paginas as $pagina): ?>
+                                                <li><a href="<?= base_url("paginas/exibir/" . $pagina->id . "/" . limpar($pagina->slug)); ?>"><?= $pagina->titulo ?></a></li>
+                                            <?php endforeach; ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -185,9 +181,11 @@
                 </div>
             </div>
         </div>
-        <?php if ($this->load->get_section('SlideBanner') != '') { ?>
-            <?= $this->load->get_section('SlideBanner'); ?>
-        <?php } ?>
+        <div class="container">
+            <?php if ($this->load->get_section('SlideBanner') != '') { ?>
+                <?= $this->load->get_section('SlideBanner'); ?>
+            <?php } ?>
+        </div>
         <div class="container">
             <div class="row">
                 <?= $this->load->get_section('sidebar'); ?>
@@ -224,7 +222,7 @@
         <?php } ?>
         <!-- FIM -->
 
-
+       
         <!-- jQuery -->
         <script src="<?= base_url(); ?>assets/themes/loja_frontend/js/jquery.js"></script>
 

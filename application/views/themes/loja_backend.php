@@ -9,6 +9,21 @@
 
         <title><?= $title; ?></title>
 
+        <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=y5sbu0l3u3entc9glq8g4ks45pmob1uxpzpmgupybfjjktfs"></script>
+        <script type="text/javascript">
+            tinymce.init({
+                selector: 'textarea',
+                height: 500,
+                menubar: false,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table contextmenu paste code'
+                ],
+                toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+            });
+        </script>
+
         <?php
         /** -- Copy from here -- */
         if (!empty($meta))
@@ -50,7 +65,7 @@
                 <div class="col-md-3 left_col">
                     <div class="left_col scroll-view">
                         <div class="navbar nav_title" style="border: 0;">
-                            <a href="<?=  base_url('administracao');?>" class="site_title"><i class="fa fa-paw"></i> <span>Criativa</span></a>
+                            <a href="<?= base_url('administracao'); ?>" class="site_title"><i class="fa fa-paw"></i> <span>Criativa</span></a>
                         </div>
 
                         <div class="clearfix"></div>
@@ -58,11 +73,11 @@
                         <!-- menu profile quick info -->
                         <div class="profile clearfix">
                             <div class="profile_pic">
-                                <img src="<?=  base_url('assets/themes/loja_backend/images/img.jpg');?>" alt="..." class="img-circle profile_img">
+                                <img src="http://www.escoteiros.org.br/wp-content/uploads/2015/05/nopic.png" alt="..." class="img-circle profile_img">
                             </div>
                             <div class="profile_info">
                                 <span>Bem vindo,</span>
-                                <h2>Thiago Soares</h2>
+                                <h2><?= $this->session->userdata('usuario'); ?></h2>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -77,40 +92,45 @@
                                 <ul class="nav side-menu">
                                     <li><a><i class="fa fa-home"></i> Vendas <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="<?=  base_url('administracao/pedidos');?>">Pedidos</a></li>
-                                            <li><a href="<?=  base_url('administracao/clientes');?>">Clientes</a></li>
-                                            <li><a href="#">Estoque</a></li>
-                                            <li><a href="#">Relatórios</a></li>
-                                            <li><a href="#">Visão Geral</a></li>
+                                            <li><a href="<?= base_url('administracao/pedidos'); ?>">Pedidos</a></li>
+                                            <li><a href="<?= base_url('administracao/clientes'); ?>">Clientes</a></li>
+                                            <li><a href="<?= base_url('administracao/estoque'); ?>">Estoque</a></li>
+                                            <li><a href="<?= base_url('administracao/relatorio'); ?>">Relatórios</a></li>
+                                            <li><a href="<?= base_url('administracao/visaoGeral'); ?>">Visão Geral</a></li>
                                         </ul>
                                     </li>
                                     <li><a><i class="fa fa-edit"></i> Produtos <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="<?=  base_url('administracao/produtos');?>">Listar</a></li>
-                                            <li><a href="#">Criar</a></li>
-                                            <li><a href="#">Importar / Exportar</a></li>
-                                            <li><a href="<?=  base_url('administracao/categorias');?>">Categorias</a></li>
-                                            <li><a href="#">Marcas</a></li>
-                                            <li><a href="#">Variações</a></li>
+                                            <li><a href="<?= base_url('administracao/produtos/listar'); ?>">Listar</a></li>
+                                            <li><a href="<?= base_url('administracao/produtos/criar'); ?>">Criar</a></li>
+                                            <li><a href="<?= base_url('administracao/produtos/especificacoes'); ?>">Especificações Técnicas</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Importar / Exportar</a></li>
+                                            <li><a href="<?= base_url('administracao/categorias'); ?>">Categorias</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Marcas</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Variações</a></li>
                                         </ul>
                                     </li>
                                     <li><a><i class="fa fa-desktop"></i> Marketing <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="#">Cupons de desconto</a></li>
-                                            <li><a href="#">Frete Grátis</a></li>
-                                            <li><a href="#">Carrinhos Abandonados</a></li>
-                                            <li><a href="#">Depoimentos</a></li>
-                                            <li><a href="#">Assinantes de Newsletter</a></li>
-                                            <li><a href="#">Relatórios</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Cupons de desconto</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Frete Grátis</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Carrinhos Abandonados</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Depoimentos</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Assinantes de Newsletter</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Relatórios</a></li>
                                         </ul>
                                     </li>
                                     <li><a><i class="fa fa-table"></i> Layout <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="#">Editor de Tema</a></li>
-                                            <li><a href="#">Banners</a></li>
-                                            <li><a href="#">Páginas</a></li>
-                                            <li><a href="#">Redes Sociais</a></li>
-                                            <li><a href="#">Conteúdo</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Editor de Tema</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Banners</a></li>
+                                            <li><a href="<?= base_url('administracao/paginas'); ?>">Páginas</a></li>
+                                            <li><a href="<?= base_url('administracao'); ?>">Redes Sociais</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a><i class="fa fa-cog"></i> Configurações <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="<?= base_url('administracao/usuarios'); ?>">Usuários</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -148,80 +168,44 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="">
                                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <img src="" alt="">John Doe
+                                        <img src="http://www.escoteiros.org.br/wp-content/uploads/2015/05/nopic.png" alt=""><?= $this->session->userdata('usuario'); ?>
                                         <span class=" fa fa-angle-down"></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                        <li><a href="javascript:;"> Profile</a></li>
-                                        <li>
-                                            <a href="javascript:;">
-                                                <span class="badge bg-red pull-right">50%</span>
-                                                <span>Settings</span>
-                                            </a>
-                                        </li>
-                                        <li><a href="javascript:;">Help</a></li>
-                                        <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                        <!--                                        <li><a href="javascript:;"> Profile</a></li>
+                                                                                <li>
+                                                                                    <a href="javascript:;">
+                                                                                        <span class="badge bg-red pull-right">50%</span>
+                                                                                        <span>Settings</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li><a href="javascript:;">Help</a></li>-->
+                                        <li><a href="<?= base_url('administracao/usuarios/logout'); ?>"><i class="fa fa-sign-out pull-right"></i> Sair</a></li>
                                     </ul>
                                 </li>
 
                                 <li role="presentation" class="dropdown">
                                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-envelope-o"></i>
-                                        <span class="badge bg-green">6</span>
+                                        <span class="badge bg-green">1</span>
                                     </a>
                                     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                         <li>
                                             <a>
-                                                <span class="image"><img src="" alt="Profile Image" /></span>
+                                                <span class="image"><img src="http://www.escoteiros.org.br/wp-content/uploads/2015/05/nopic.png" alt="Profile Image" /></span>
                                                 <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
+                                                    <span>Thiago Soares</span>
+                                                    <span class="time">3 min atrás</span>
                                                 </span>
                                                 <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image"><img src="" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image"><img src="" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span class="image"><img src="" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
+                                                    Banco de dados da loja atualizado com sucesso!
                                                 </span>
                                             </a>
                                         </li>
                                         <li>
                                             <div class="text-center">
                                                 <a>
-                                                    <strong>See All Alerts</strong>
+                                                    <strong>Ver todas as mensagens</strong>
                                                     <i class="fa fa-angle-right"></i>
                                                 </a>
                                             </div>

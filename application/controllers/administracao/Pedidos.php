@@ -13,6 +13,11 @@ class Pedidos extends CI_Controller {
     }
 
     private function _init() {
+         //Controle de Permissão
+        $this->load->model('usuarios_model', 'modelusuarios');
+        $this->modelusuarios->validar($this->router->class, $this->router->method);
+        
+        
         //Carregar models
         $this->load->model('pedidos_model', 'modelpedidos');
         $this->load->library('table');

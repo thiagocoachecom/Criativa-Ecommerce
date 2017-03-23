@@ -115,7 +115,7 @@
 
 
                         $excluir = anchor(base_url("administracao/categorias/excluir/" . md5($categoria->id)), "Excluir");
-                        $alterar = anchor(base_url("administracao/categorias/alterar/" . md5($categoria->id)), "Aleterar");
+                        $alterar = anchor(base_url("administracao/categorias/alterar/" . md5($categoria->id)), "Alterar");
                         $this->table->add_row($imagem, $excluir, $alterar, $categoria->titulo);
                     }
                     $this->table->set_template(array('table_open' => '<table class="table table-striped miniaturas">'));

@@ -16,9 +16,11 @@ class Produtos extends CI_Controller {
         //Carregar models
         $this->load->model('categorias_model', 'modelcategorias');
         $this->load->model('produtos_model', 'modelprodutos');
+        $this->load->model('paginas_model', 'modelpaginas');
 
-        //Carregar categorias
+        //Carregar categorias, paginas
         $this->categorias = $this->modelcategorias->listar_categorias();
+        $this->paginas = $this->modelpaginas->listar_paginas();
 
         //Configurações de Templates
         $this->output->set_template('loja_frontend');
@@ -30,11 +32,13 @@ class Produtos extends CI_Controller {
 
     public function index() {
         $dados['categorias'] = $this->categorias;
+        $dados['paginas'] = $this->paginas;
         $this->load->view('loja_frontend/categorias', $dados);
     }
 
     public function produto($id) {
         $dados['categorias'] = $this->categorias;
+        $dados['paginas'] = $this->paginas;
         $produtos = $dados['produtos'] = $this->modelprodutos->detalhes_produto($id);
 
         //Configurações de Templates

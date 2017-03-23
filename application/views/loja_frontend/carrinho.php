@@ -1,7 +1,3 @@
-<pre>
-    <?= print_r($this->cart->contents()); ?>
-   
-</pre>
 <?php $contador = 1; ?>
 <div class="col-md-12">
     <div class="page-header">

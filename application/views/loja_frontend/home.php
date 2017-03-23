@@ -1,5 +1,10 @@
 <div class="col-xs-12 col-sm-9">
     <div class="row">
+        <div class="col-md-12">
+            <p><h3><i class="fa fa-flag" aria-hidden="true"></i> <strong>Lançamentos/Destaques</strong></h3></p>
+        </div>
+    </div>
+    <div class="row">
         <?php
         $contador = 0;
         foreach ($destaques as $destaque): $contador++;
@@ -31,10 +36,13 @@
                         </div>
                     </div>
                     <h6><a href="<?= base_url("produto/" . $destaque->id . "/" . limpar($destaque->titulo)); ?>"><?= $destaque->titulo ?></a></h6>
-                    <div class="price">
-                        <span class="price-old">de: <del><?= reais($destaque->preco) ?></del></span>
-                        <div>por: <strong><?= reais($destaque->preco) ?></strong> <span class="label-tags"><span class="label label-success">-10%</span></span></div>
+                    <div class="mold_info_product">
+                        <span class="labelcartao"><b>3x</b> no cartão de crédito</span>
+                        <br>
+                        <span class="labeltag"><b>5%</b> de desconto no boleto à vista</span>
                     </div>
+                    <br>
+                    <a href="<?= base_url("produto/" . $destaque->id . "/" . limpar($destaque->titulo)); ?>" class="btn btn-primary center-block">Detalhes | preço</a>
                 </div>
             </div>
             <?php

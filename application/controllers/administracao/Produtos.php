@@ -15,6 +15,11 @@ class Produtos extends CI_Controller {
     }
 
     private function _init() {
+        //Controle de Permissão
+        $this->load->model('usuarios_model', 'modelusuarios');
+        $this->modelusuarios->validar($this->router->class, $this->router->method);
+
+
         $this->load->model('categorias_model', 'modelcategorias');
         $this->categorias = $this->modelcategorias->listar_categorias();
         $this->load->model('produtos_model', 'modelprodutos');
@@ -30,10 +35,14 @@ class Produtos extends CI_Controller {
         $this->load->section('footer', 'loja_frontend/footer');
     }
 
-    public function index($pular = null) {
+    public function index() {
+        $this->listar();
+    }
+
+    public function listar($pular = null) {
         $this->load->library('table');
         $this->load->library('pagination');
-        $config['base_url'] = base_url("administracao/produtos/index");
+        $config['base_url'] = base_url("administracao/produtos/listar");
         $config['total_rows'] = $this->modelprodutos->contar();
         $produtos_por_pagina = 5;
         $config['per_page'] = $produtos_por_pagina;
@@ -44,8 +53,7 @@ class Produtos extends CI_Controller {
         $this->load->view('loja_backend/produtos', $dados);
     }
 
-    public function adicionar() {
-        $this->load->library('form_validation');
+    public function criar() {
         $this->form_validation->set_rules('txt_codigo', 'Código', 'required|min_length[3]|is_unique[produtos.codigo]');
         $this->form_validation->set_rules('txt_titulo', 'Nome da categoria', 'required|min_length[3]');
         $this->form_validation->set_rules('txt_preco', 'Preço', 'required|decimal|min_length[3]');
@@ -55,7 +63,7 @@ class Produtos extends CI_Controller {
         $this->form_validation->set_rules('txt_peso_gramas', 'Peso (gramas)', 'required|integer|min_length[2]');
         $this->form_validation->set_rules('txt_descricao', 'Descricao', 'required|min_length[30]');
         if ($this->form_validation->run() == FALSE) {
-            $this->index();
+            $this->load->view('loja_backend/cadastrar_novo_produto');
         } else {
             $codigo = $this->input->post('txt_codigo');
             $titulo = $this->input->post('txt_titulo');
@@ -66,20 +74,19 @@ class Produtos extends CI_Controller {
             $peso = $this->input->post('txt_peso_gramas');
             $descricao = $this->input->post('txt_descricao');
             if ($this->modelprodutos->adicionar($codigo, $titulo, $preco, $largura, $altura, $comprimento, $peso, $descricao)) {
-                redirect(base_url('administracao/produtos'));
+                redirect(base_url('administracao/produtos/listar'));
             } else {
                 echo "Houve um erro ao cadastrar a categoria.";
             }
         }
     }
 
-    public function alterar($produto) {
+    public function editar($produto) {
         $dados['produto'] = $this->modelprodutos->detalhes_produto($produto);
         $this->load->view('loja_backend/alterar_produto', $dados);
     }
 
     public function salvar_alteracoes() {
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('txt_codigo', 'Código', 'required|min_length[3]');
         $this->form_validation->set_rules('txt_titulo', 'Nome da categoria', 'required|min_length[3]');
         $this->form_validation->set_rules('txt_preco', 'Preço', 'required|decimal|min_length[3]');
@@ -101,7 +108,7 @@ class Produtos extends CI_Controller {
             $peso = $this->input->post('txt_peso_gramas');
             $descricao = $this->input->post('txt_descricao');
             if ($this->modelprodutos->salvar_alteracoes($id, $codigo, $titulo, $preco, $largura, $altura, $comprimento, $peso, $descricao)) {
-                redirect(base_url('administracao/produtos/alterar/' . $id));
+                redirect(base_url('administracao/produtos/editar/' . $id));
             } else {
                 echo "Houve um erro ao cadastrar o produto.";
             }
@@ -120,11 +127,11 @@ class Produtos extends CI_Controller {
         } else {
             $config2['source_image'] = './assets/uploads/images/produtos/' . $id . '.jpg';
             $config2['create_thumb'] = FALSE;
-            $config2['width'] = 400;
-            $config2['height'] = 400;
+            $config2['width'] = 800;
+            $config2['height'] = 800;
             $this->load->library('image_lib', $config2);
             if ($this->image_lib->resize()) {
-                redirect(base_url('administracao/produtos/alterar/' . $id));
+                redirect(base_url('administracao/produtos/editar/' . $id));
             } else {
                 echo $this->image_lib->display_errors();
             }
@@ -139,4 +146,29 @@ class Produtos extends CI_Controller {
         }
     }
 
+    public function especificacoes() {
+        $dados['especificacoes'] = $this->modelprodutos->getEspecificacoes();
+        $this->form_validation->set_rules('descricao', 'Descrição', 'required|min_length[3]');
+        $this->form_validation->set_rules('preco', 'Preço', 'required|decimal|min_length[3]');
+        $this->form_validation->set_rules('altura', 'Altura', 'required|min_length[3]');
+        $this->form_validation->set_rules('largura', 'Largura', 'required|min_length[3]');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('loja_backend/especificacoes', $dados);
+        } else {
+            $data['descricao'] = $this->input->post('descricao');
+            $data['preco'] = $this->input->post('preco');
+            $data['altura'] = $this->input->post('altura');
+            $data['largura'] = $this->input->post('largura');
+            
+            if ($this->modelprodutos->salvar_especificacoes($data)) {
+                redirect(base_url('administracao/produtos/especificacoes'));
+            } else {
+                echo "Houve um erro ao cadastrar o produto.";
+            }
+        }
+    }
+    
+    public function editar_especificacoes($id){
+        print_r($id);
+    }
 }

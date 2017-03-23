@@ -13,6 +13,11 @@ class Clientes extends CI_Controller {
     }
     
      private function _init() {
+          //Controle de Permissão
+        $this->load->model('usuarios_model', 'modelusuarios');
+        $this->modelusuarios->validar($this->router->class, $this->router->method);
+        
+        
         //Carregar models
         $this->load->model('clientes_model', 'modelclientes');
         
@@ -45,7 +50,6 @@ class Clientes extends CI_Controller {
     }
 
     public function salvar_alteracao() {
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('nome', 'Nome', 'required|min_length[5]');
         $this->form_validation->set_rules('cpf', 'CPF', 'required|min_length[14]');
         $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');

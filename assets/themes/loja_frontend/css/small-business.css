@@ -8,7 +8,24 @@ body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
     font-family: 'Open Sans', sans-serif;
 }
-
+img.img-responsive.img-categoria {
+    margin-top: 20px;
+}
+.mold_categorias_produtos {
+    border-bottom: 3px solid #bbbbbb;
+    margin-bottom: 35px;
+}
+span.labeltag {
+    font-size: 11px;
+}
+.mold_info_product {
+    text-align: center;
+}
+span.labelcartao {
+    background: #e0e0e0;
+    padding: 1px 7px;
+    border-radius: 5px;
+}
 .nav {
     padding: 0px 0px;
 }
@@ -315,7 +332,7 @@ img.pull-right.logo-netcriativa {
     color: #ef5350;
 }
 .box-product-outer:hover {
-    border: 1px solid #1a75ce
+    border: 1px solid #efefef;
 }
 .box-product-outer:hover {
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -490,8 +507,15 @@ td.final-carrinho-soma {
     border-radius: 4px;
 }
 .mold-form-pagamento {
-    margin-top: 45px;
+    margin-top: 12px;
 }
-.mold_descricao_produto {
-    margin-top: 45px;
+.tab-content {
+    background: whitesmoke;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
 }

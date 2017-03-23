@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Categorias extends CI_Controller {
+class Paginas extends CI_Controller {
 
     private $categorias;
     private $paginas;
@@ -18,12 +18,11 @@ class Categorias extends CI_Controller {
         $this->load->model('categorias_model', 'modelcategorias');
         $this->load->model('paginas_model', 'modelpaginas');
 
-
-        //Carregar categorias, paginas
+        //Carregar categorias
         $this->categorias = $this->modelcategorias->listar_categorias();
         $this->paginas = $this->modelpaginas->listar_paginas();
-
-
+        $data['categorias'] = $this->categorias;
+        $data['paginas'] = $this->paginas;
 
         //Configurações de Templates
         $this->output->set_template('loja_frontend');
@@ -35,15 +34,18 @@ class Categorias extends CI_Controller {
     public function index() {
         $data['categorias'] = $this->categorias;
         $data['paginas'] = $this->paginas;
-        $this->load->view('loja_frontend/categorias', $data);
+        $this->load->view('loja_frontend/paginas', $data);
     }
 
-    public function categoria($id, $slug = NULL) {
-        $data['categorias'] = $this->categorias;
+    public function exibir($id, $slug = NULL) {
+        
         $data['paginas'] = $this->paginas;
+        $data['conteudoPagina'] = $this->modelpaginas->detalhes_pagina($id);
+        
+        $data['categorias'] = $this->categorias;
         $data['categoria'] = $this->modelcategorias->listar_produtos_categoria($id);
         $this->load->section('sidebar', 'loja_frontend/sidebar', $data);
-        $this->load->view('loja_frontend/categoria', $data);
+        $this->load->view('loja_frontend/pagina', $data);
     }
 
 }

@@ -6,6 +6,7 @@ if (!defined('BASEPATH'))
 class Home extends CI_Controller {
 
     private $categorias;
+    private $paginas;
 
     function __construct() {
         parent::__construct();
@@ -15,17 +16,20 @@ class Home extends CI_Controller {
     private function _init() {
         //Carregar models
         $this->load->model('categorias_model', 'modelcategorias');
+        $this->load->model('paginas_model', 'modelpaginas');
         $this->load->model('produtos_model', 'modelprodutos');
 
-        //Carregar categorias
+        //Carregar categorias, paginas
         $this->categorias = $this->modelcategorias->listar_categorias();
+        $this->paginas = $this->modelpaginas->listar_paginas();
+
         $data['categorias'] = $this->categorias;
+        $data['paginas'] = $this->paginas;
 
         //Configurações de Templates
         $this->output->set_template('loja_frontend');
         $this->output->set_title("BSB Comunicação Mídia e Comunicação Visual");
         $this->output->append_title("Placas, Banners, Adesivos");
-        $this->output->set_meta('description', 'tiohoiuhçkjhlku');
         $this->output->set_meta('keywords', 'placas, adesivos, comunicação visual, letreiros, letra caixa forma, banners');
 
         //Carregar Sessoes do Template
@@ -34,15 +38,10 @@ class Home extends CI_Controller {
     }
 
     public function index() {
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
-        if ($this->form_validation->run() == FALSE) {
-            $this->output->set_template('loja_offline');
-        } else {
-            $dados['email'] = $this->input->post('email');
-            $this->enviar_email_confirmacao($dados);
-            $this->output->set_template('loja_offline');
-        }
+        $this->load->section('SlideBanner', 'loja_frontend/SlideBanner');
+        $dados['destaques'] = $this->modelprodutos->destaques_home(12);
+        $dados['paginas'] = $this->paginas;
+        $this->load->view('loja_frontend/home', $dados);
     }
 
     public function enviar_email_confirmacao($dados) {
@@ -58,12 +57,6 @@ class Home extends CI_Controller {
         } else {
             print_r($this->email->print_debugger());
         }
-    }
-
-    public function inicio() {
-        $this->load->section('SlideBanner', 'loja_frontend/SlideBanner');
-        $dados['destaques'] = $this->modelprodutos->destaques_home(12);
-        $this->load->view('loja_frontend/home', $dados);
     }
 
     public function buscar() {

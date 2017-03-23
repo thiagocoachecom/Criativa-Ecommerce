@@ -59,3 +59,8 @@ $route['logout'] = 'cadastro/logout';
 $route['esqueci_minha_senha'] = 'cadastro/esqueci_minha_senha';
 $route['minhaconta/(:any)'] = "cadastro/minhaconta/$1";
 $route['pagar-e-finalizar-compra'] = "carrinho/form_pagamento";
+
+
+$route['administracao/login'] = 'administracao/home/login';
+$route['administracao/logout'] = 'administracao/usuarios/logout';
+$route['administracao/sem-permissao'] = 'administracao/usuarios/sem_permissao';
