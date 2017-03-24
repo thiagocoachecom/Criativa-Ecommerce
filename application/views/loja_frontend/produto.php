@@ -35,6 +35,31 @@
                     </div>
                     <hr>
                     <div class="row">
+                        <div class="col-md-12">
+                            <h3>Especificacoes Técnicas</h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Preço</th>
+                                        <th>Descrição</th>
+                                        <th>Tamanho</th>
+                                        <th>Alterar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($especificacoes as $item): ?>
+                                        <tr>
+                                            <th scope="row"><?= $item->preco ?></th>
+                                            <td><?= $item->descricao ?></td>
+                                            <td><?= $item->altura ?>mm X <?= $item->largura ?>mm</td>
+                                            <td><a type="button" href="" class="btn btn-primary btn-xs center-block">Escolher</a></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="preco-produto destaque-avista com-promocao">
                                 <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
@@ -75,11 +100,6 @@
                                     </b>
                                 </span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-
                         </div>
                     </div>
                 </div>
