@@ -39,7 +39,9 @@ class Produtos extends CI_Controller {
     public function produto($id) {
         $dados['categorias'] = $this->categorias;
         $dados['paginas'] = $this->paginas;
+        $dados['especificacoes'] = $this->modelprodutos->getEspecificacoes();
         $produtos = $dados['produtos'] = $this->modelprodutos->detalhes_produto($id);
+        
 
         //Configurações de Templates
         $this->output->append_title($produtos[0]->titulo);
